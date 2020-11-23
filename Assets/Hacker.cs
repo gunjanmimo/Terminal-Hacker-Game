@@ -1,9 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Hacker : MonoBehaviour
 {
+    // game state
+    int level;
+
+    enum Screen { MainMenu, Password, Win };
+    Screen currentScreen = Screen.MainMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +32,39 @@ public class Hacker : MonoBehaviour
         {
             showMainMenu();
         }
+        else if (currentScreen == Screen.MainMenu)
+        {
+            RunMainMenu(input);
+        }
+    }
+
+    void RunMainMenu(string input)
+    {
+        if (input == "1")
+        {
+            level = 1;
+            StartGame();
+        }
+        else if (input == "2")
+        {
+            level = 2;
+            StartGame();
+        }
         else if (input == "clear")
         {
             Terminal.ClearScreen();
         }
+
+        else
+        {
+            Terminal.WriteLine("Invalid command");
+        }
     }
 
+    void StartGame()
+    {
+        currentScreen = Screen.Password;
+        Terminal.WriteLine("you have choosed level " + level);
+        Terminal.WriteLine("Enter your password: ");
+    }
 }
