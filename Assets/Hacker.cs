@@ -9,7 +9,8 @@ public class Hacker : MonoBehaviour
     int level;
 
     enum Screen { MainMenu, Password, Win };
-    Screen currentScreen = Screen.MainMenu;
+    Screen currentScreen;
+    string password;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class Hacker : MonoBehaviour
     // main menu function
     void showMainMenu()
     {
+        currentScreen = Screen.MainMenu;
         Terminal.ClearScreen();
         Terminal.WriteLine("What would you like to hack into?");
         Terminal.WriteLine("Press 1 for the local libraries");
@@ -36,18 +38,32 @@ public class Hacker : MonoBehaviour
         {
             RunMainMenu(input);
         }
+        else if (currentScreen == Screen.Password)
+        {
+            checkPassword(input);
+        }
     }
+
+
 
     void RunMainMenu(string input)
     {
         if (input == "1")
         {
             level = 1;
+            password = "donkey";
             StartGame();
         }
         else if (input == "2")
         {
             level = 2;
+            password = "animation";
+            StartGame();
+        }
+        else if (input == "3")
+        {
+            level = 3;
+            password = "ultrasonography";
             StartGame();
         }
         else if (input == "clear")
@@ -66,5 +82,17 @@ public class Hacker : MonoBehaviour
         currentScreen = Screen.Password;
         Terminal.WriteLine("you have choosed level " + level);
         Terminal.WriteLine("Enter your password: ");
+
+    }
+    void checkPassword(string input)
+    {
+        if (input == password)
+        {
+            Terminal.WriteLine("well done!");
+        }
+        else
+        {
+            Terminal.WriteLine("Sorry, wrong password !");
+        }
     }
 }
